@@ -1,0 +1,22 @@
+<% @categories = Category.all.map{|c| [ c.name, c.id ] } %>
+
+<%= form_with(model: @subcategory) do |f| %>
+  <div class="field mb-3 mt-5">
+    <%= f.label :name, class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="field mb-3">
+    <%= f.label :desc, 'Desription', class: 'form-label' %>
+    <%= f.text_area :desc, class: 'form-control' %>
+  </div>
+
+  <div class="field mb-3">
+    <%= f.label :category_id, 'Parrent category', class: 'form-label' %>
+    <%= select_tag(:category_id, options_for_select(@categories), :prompt => 'Select' , class: 'form-select') %>
+  </div>
+
+  <div class="actions mb-3">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

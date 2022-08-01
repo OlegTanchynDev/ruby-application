@@ -1,0 +1,35 @@
+<%= form_with(model: article) do |form| %>
+  <% if article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+        <% article.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field mb-3 mt-5">
+    <%= form.label :cover_picture, class: 'form-label' %>
+    <%= form.file_field :cover_picture, class: 'form-control' %>
+  </div>
+
+  <div class="field mb-3">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="field mb-3">
+    <%= form.label :body, class: 'form-label' %>
+    <%= form.text_area :body, class: 'form-control' %>
+  </div>
+
+  <div class="field mb-3">
+    <%= select_tag(:category_id, options_for_select(@categories), :prompt => "Select", class: 'form-select') %>
+  </div>
+
+  <div class="actions mb-3">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

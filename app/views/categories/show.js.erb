@@ -1,0 +1,4 @@
+categories = '<%= raw @category.subcategories.all.map{|c| '<li class="list-group-item pl-4">' + c.name + '</li>' }.join %>'
+console.log(categories);
+
+$('.submenu').html(categories);

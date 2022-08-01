@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TrainingRubyApplication</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <!-- Main Navigation -->
+  <%= render 'templates/main_nav' %>
+
+  <div class="main">
+    <div class="row m-0 overflow-hidden bg-white">
+      <div class="col-lg-2 px-0">
+        <!-- Sidebar Left Navigation -->
+        <%=
+          if current_user
+              render 'templates/sidebar_left'
+          end
+        %>
+      </div>
+      <div class="col-lg-7 main-body container">
+        <!-- Notices-->
+        <%= render 'templates/notices' %>
+        <!-- Main-->
+        <%= yield %>
+      </div>
+      <div class="col-lg-3">
+        <!-- Sidebar Right Navigation -->
+        <%= futurize "templates/sidebar_right", extends: :div do %>
+          <div class="spinner"></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <%= render 'templates/footer' %>
+
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<% @articles = Article.all %>
+
+<div data-component="sidebar">
+  <div class="sidebar">
+    <ul class="list-group flex-column d-inline-block first-menu">
+      <li class="list-group-item pl-3 py-2">
+        <a href="#"><%= t('hello') %></a>
+      </li>
+      <li class="list-group-item pl-3 py-2">
+        <%= link_to 'Categories', categories_path %>
+      </li>
+    </ul>
+  </div>
+</div>

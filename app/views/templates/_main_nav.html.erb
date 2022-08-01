@@ -1,0 +1,74 @@
+<% user = current_user %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+        $('#user_locale').on('change', function () {
+            $('.UpdateLocale').trigger('click');
+        })
+    });
+</script>
+
+<nav class="header navbar navbar-expand-lg navbar-light bg-light p-0">
+  <a class="navbar-brand" href="/"><%= t('Sports Hub') %></a>
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input type="search" class="form-control" placeholder="Search by" aria-label="Search">
+      </form>
+    </div>
+    <% if user_signed_in? %>
+      <div class="d-block position-relative">
+        <a href="#" class="d-block position-relative link-dark text-decoration-none p-0" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="d-flex align-items-center dropdown-toggle">
+            <div class="col-3 bg-light p-3">
+              <% if (user.user_picture.attach(params[:user_picture]) == true ) -%>
+                <img src="https://agile.yakubovsky.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" class="rounded-circle avatar"/>
+              <% end -%>
+              <% if user.user_picture -%>
+                <!--    <%#= image_tag user.user_picture, class:"rounded-circle avatar" %>-->
+              <% end -%>
+            </div>
+            <div class="col-7 bg-light p-3">
+              <strong><%= current_user.name %></strong></br>
+              <%= current_user.role %>
+            </div>
+          </div>
+        </a>
+        <ul class="dropdown-menu text-small shadow m-0 p-0 profile-drop-menu" aria-labelledby="dropdownUser2" style="">
+          <li><%= link_to "View profile", user_path(current_user), :class => 'dropdown-item' %></li>
+          <li><%= link_to "Change password", edit_user_registration_path+'#pills-password', :class => 'dropdown-item' %></li>
+          <li><%= link_to "My Surveys", user_path(current_user), :class => 'dropdown-item' %></li>
+          <li><%= link_to "Team hub", user_path(current_user), :class => 'dropdown-item' %></li>
+          <li>
+            <hr class="dropdown-divider m-0">
+          </li>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'dropdown-item' %></li>
+        </ul>
+        </div>
+      <div class="nav-item d-block position-relative">
+        <%= form_with(model: current_user, url: user_update_from_menu_path(current_user.id)) do |f| %>
+            <%= f.select(:locale, {'EN' => :en,'UA' => :ua,'NL' => :nl}, {}, { :class => 'form-control form-select' }) %>
+          <%= f.submit "Update".html_safe, class: 'UpdateLocale'%>
+        <% end %>
+      </div>
+      <% else %>
+      <div class="row align-items-center text-white">
+        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link red col'  %>
+        <%= link_to "Login in", new_user_session_path, :class => 'navbar-link btn btn-outline-danger login-btn col'  %>
+        <div class="col nav-item dropdown d-flex align-items-center justify-content-center">
+            <a class="nav-link dropdown-toggle form-control form-select" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">EN</a>
+            <ul class="dropdown-menu text-small shadow lang-drop-menu" aria-labelledby="dropdownUser2" style="">
+              <li><a class="dropdown-item" href="#">UA</a></li>
+              <hr class="dropdown-divider">
+              <li><a class="dropdown-item" href="#">NL</a></li>
+            </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</nav>

@@ -1,0 +1,61 @@
+<% category = @category %>
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @category.desc %>
+</p>
+
+<h5 class="mt-5 mb-3"><b>SUBCATEGORIES ( <%= category.subcategories.count %> )</b></h5>
+<% category.subcategories.each do |subcategory| %>
+  <p>
+    <b>Name:</b>
+    <a href="<%= ('/categories/')+category.id.to_s+'/subcategories/'+subcategory.id.to_s %>"><%= subcategory.name %></a>
+    <b>Date:</b>
+    <%= subcategory.created_at.strftime("%d.%m.%Y") %>
+    <b>Description:</b>
+    <%= subcategory.desc %>
+  </p>
+
+  <p class="mb-5">
+    <%= link_to 'Destroy Subcategory', [subcategory.category, subcategory],
+                :confirm => 'Are you sure?',
+                :method => :delete
+    %>
+  </p>
+<% end %>
+
+<% @article = Article.find_by category_id: @category.id %>
+<% if @article %>
+  <h5 class="mt-5 mb-3"><b>ARTICLES:</b></h5>
+  <p>
+    <b>Title:</b>
+    <%= link_to @article.title, article_path(@article) %>
+    <b>Date:</b>
+    <%= @article.created_at.strftime("%d.%m.%Y") %>
+    <b>Description:</b>
+    <%= @article.body %>
+  </p>
+<% end %>
+
+
+<div class="card mt-5 mb-3">
+  <div class="card-body">
+    <p class="font-weight-bold">Add subcategory:</p>
+    <%= form_with(model: [category, category.subcategories.build]) do |f| %>
+      <div class="form-group">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, class: 'form-control' %><br />
+        <%= f.label :desc %><br />
+        <%= f.text_area :desc, class: 'form-control' %><br />
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>

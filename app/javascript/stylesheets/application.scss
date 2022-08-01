@@ -1,0 +1,56 @@
+@import "bootstrap";
+$white: #FFF;
+
+.header {
+  .navbar-brand {
+    background: $red-500;
+    color: $white;
+    width: 250px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      color: $white;
+    }
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+.footer {
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+  background: $red-500;
+  .navbar-brand {
+    color: $white;
+    width: 250px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  .footer-pills {
+    color: $white;
+    line-height: 1;
+    list-style: none;
+    display: flex;
+    float: right;
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    margin: 0;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 10px;
+    }
+  }
+}

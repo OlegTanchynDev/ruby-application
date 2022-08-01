@@ -1,0 +1,48 @@
+<% @articles = Article.all %>
+<%
+  url = request.host
+  url_host = URI.parse(url).host
+%>
+<div id="carouselArticle" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <% @articles.each_with_index do |article, index| %>
+      <div class="carousel-item <%= 'active' if index==0 %>">
+        <img src="<%= url_for(article.cover_picture) %> %>" class="d-block" alt="...">
+        <div class="carousel-caption">
+          <h6 class="silver">Published /<%= article.created_at.strftime("%d.%m.%Y") %></h6>
+          <h5 class="red"><%= article.title %></h5>
+          <h4 class="black"><%= article.body %></h4>
+          <h5><a href="<%= url_host %>/articles/<%= article.id %>" class="btn btn-danger more-btn">More</a></h5>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="carousel-control">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselArticle" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <div class="carousel-indicators">
+      <% @articles.each_with_index do |article, index| %>
+        <button type="button" data-bs-target="#carouselArticle" data-bs-slide-to="<%= index %>" class="<%= 'active' if index==0 %>" aria-current="true" aria-label="Slide <%= index+1 %>">0<%= index+1 %></button>
+      <% end %>
+    </div>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselArticle" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<div class="row four_column_articles m-0">
+  <% @articles.each_with_index do |article, index| %>
+    <div class="col">
+      <img src="<%= url_for(article.cover_picture) %>" class="rounded float-start w-100" alt="<%= article.title %>">
+      <div class="container">
+        <h5><%= article.title %></h5>
+        <h6 class="silver"><%= article.body %></h6>
+        <p class="right"><%= link_to "More", article_url(article), class: "hidden-for-large" %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
